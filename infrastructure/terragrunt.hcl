@@ -9,6 +9,16 @@ provider "aws" {
 EOF
 }
 
+generate "backend" {
+  path      = "backend.tf"
+  if_exists = "overwrite_terragrunt"
+  contents  = <<EOF
+terraform {
+  backend "s3" {}
+}
+EOF
+}
+
 dependency "tesseract" {
   config_path = "../../tesseract/deployment/live/aws/test"
 }
