@@ -18,7 +18,7 @@ remote_state {
 
   config = {
     region = "eu-west-1"
-    bucket = "${local.prefix_name}-${local.base_name}-terraform-state"
+    bucket = "${dependency.tesseract.outputs.prefix_name}-${dependency.tesseract.outputs.base_name}-terraform-state"
     key    = "${path_relative_to_include()}/terraform.tfstate"
     s3_bucket_tags = {
       name = "terraform_state_storage"
