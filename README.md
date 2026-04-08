@@ -44,28 +44,31 @@ Follow these steps in order to ensure the Monitor correctly attaches to the Tess
 ### 1. Initialize Repository
 
 Clone the suite and initialize the Tesseract submodule:
-
+```bash
 git clone --recursive https://github.com/MatSH99/ct-monitor.git (--recursive is mandatory to automatically download the required Tesseract and CT-Go forks)
 cd ct-monitor
+```
 
 ### 2. Core Deployment (TesseraCT)
 
 Deploy the storage and log server first. This provides the S3 bucket and Aurora credentials needed by the Monitor.
-
-// Navigate to Tesseract's deployment folder
+```bash
+# Navigate to Tesseract's deployment folder
 cd tesseract/deployment/live/aws/test
 
-// Deploy core storage and database
+# Deploy core storage and database
 terragrunt apply
+```
 
 ### 3. Indexing Deployment (DynamoDB)
 
 Deploy the DynamoDB table. This module automatically fetches the environment prefix from the Tesseract deployment via Terragrunt dependencies.
-
+```bash
 cd ../../../infrastructure/live
 
-// Apply DynamoDB infrastructure
+# Apply DynamoDB infrastructure
 terragrunt apply
+```
 
 #### Configuration:
 * Partition Key: domain_name (S)
@@ -75,12 +78,12 @@ terragrunt apply
 ### 4. Build and Launch
 
 Build the Docker images (which compile the Go binaries for Tesseract, Indexer, API, and Preloader) and start the suite using the automated bridge script.
-
+```bash
 cd ../../../
 
-// 1. Build the multi-stage images
 make build
 chmod +x start.sh
+```
 
 **Pass Docker commands you want**
 The suite is divided into two ingestion streams: Live and History. You can run them individually, together, or with custom overrides.
