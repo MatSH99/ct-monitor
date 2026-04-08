@@ -22,5 +22,10 @@ export AWS_REGION="eu-central-1"
 export TESSERA_BASE_NAME="test-static-ct"
 
 # --- 4. DOCKER COMPOSE LAUNCH ---
-echo "Booting suite with Docker Compose..."
-docker compose up -d
+
+if[ $# -eq 0]; then
+  echo "Error: You should write which service you want to run"
+else
+  echo "Booting suite with Docker Compose..."
+  docker compose "$@"
+fi

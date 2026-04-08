@@ -41,11 +41,23 @@ services:
         condition: service_completed_successfully
 
   # 3. PRELOADERS
-  preloaders:
+  preloaders-live:
     build:
       context: ..
       dockerfile: ct-monitor/docker/Dockerfile
     entrypoint: ["/usr/local/bin/run_preloaders.sh"]
+    command: ["--continuous=true", "--num_workers=32", "--batch_size=1000", "--parallel_submit=16", "--parallel_fetch=4"]
+    volumes:
+      - shared_data:/shared
+    depends_on:
+      - tesseract
+
+  preloaders-history:
+    build:
+      context: ..
+      dockerfile: ct-monitor/docker/Dockerfile
+    entrypoint: ["/usr/local/bin/run_preloaders.sh"]
+    command: ["--start_index=0", "--num_workers=32", "--batch_size=1000", "--parallel_submit=16", "--parallel_fetch=4", "--continuous=false"]
     volumes:
       - shared_data:/shared
     depends_on:
