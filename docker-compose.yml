@@ -22,7 +22,7 @@ services:
       "--path_prefix=test-static-ct",
       "--origin=test-static-ct",
       "--bucket=${TESSERACT_BUCKET_NAME}",
-      "--db_name=tesseract"
+      "--db_name=tesseract",
       "--db_host=${TESSERACT_DB_HOST}",
       "--db_port=3306",
       "--db_password=${DB_PASSWORD}",
