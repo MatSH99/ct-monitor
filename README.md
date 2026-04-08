@@ -45,7 +45,7 @@ Follow these steps in order to ensure the Monitor correctly attaches to the Tess
 
 Clone the suite and initialize the Tesseract submodule:
 ```bash
-git clone --recursive https://github.com/MatSH99/ct-monitor.git (--recursive is mandatory to automatically download the required Tesseract and CT-Go forks)
+git clone --recursive https://github.com/MatSH99/ct-monitor.git # --recursive is mandatory to automatically download the required Tesseract and CT-Go forks
 cd ct-monitor
 ```
 
