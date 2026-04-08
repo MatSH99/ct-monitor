@@ -13,8 +13,8 @@ export TESSERACT_SIGNER_ECDSA_P256_PRIVATE_KEY_ID=$(terragrunt output -raw --wor
 
 # --- 2. RETRIEVE PASSWORD FROM SECRETS MANAGER ---
 echo "Retrieve database password..."
-SECRET_ARN=$(terragrunt output -json --working-dir "tesseract/deployment/live/aws/test" rds_aurora_cluster_master_user_secret | jq --raw-output .[0].secret_arn)
-export TESSERACT_DB_PASSWORD=$(aws secretsmanager get-secret-value --secret-id "$SECRET_ARN" --query SecretString --output text | jq --raw-output .password)
+SECRET_ARN=$(terragrunt output --working-dir "tesseract/deployment/live/aws/test" db_password_secret_arn)
+export TESSERACT_DB_PASSWORD=$(aws secretsmanager get-secret-value --secret-id "$SECRET_ARN" --query SecretString --output text | jq -r .password)
 
 export DYNAMO_TABLE=$(terragrunt output -raw --working-dir "infrastructure/live" table_name)
 
