@@ -6,17 +6,17 @@ MONITOR_DIR="./infrastructure/live"
 # --- 1. RETRIEVE DATA FROM TERRAGRUNT ---
 echo "Retrieve infrastructure information from Terragrunt..."
 
-export BUCKET_NAME=$(terragrunt output -raw -terragrunt-working-dir $TESSERACT_DIR/terragrunt.hcl s3_bucket_name)
-export DB_HOST=$(terragrunt output -raw -terragrunt-working-dir $TESSERACT_DIR/terragrunt.hcl rds_aurora_cluster_endpoint)
-export TESSERACT_SIGNER_ECDSA_P256_PUBLIC_KEY_ID=$(terragrunt output -raw -terragrunt-working-dir $TESSERACT_DIR/terragrunt.hcl ecdsa_p256_public_key_id)
-export TESSERACT_SIGNER_ECDSA_P256_PRIVATE_KEY_ID=$(terragrunt output -raw -terragrunt-working-dir $TESSERACT_DIR/terragrunt.hcl ecdsa_p256_private_key_id)
+export BUCKET_NAME=$(terragrunt output -raw -terragrunt-working-dir $TESSERACT_DIR s3_bucket_name)
+export DB_HOST=$(terragrunt output -raw -terragrunt-working-dir $TESSERACT_DIR rds_aurora_cluster_endpoint)
+export TESSERACT_SIGNER_ECDSA_P256_PUBLIC_KEY_ID=$(terragrunt output -raw -terragrunt-working-dir $TESSERACT_DIR ecdsa_p256_public_key_id)
+export TESSERACT_SIGNER_ECDSA_P256_PRIVATE_KEY_ID=$(terragrunt output -raw -terragrunt-working-dir $TESSERACT_DIR ecdsa_p256_private_key_id)
 
 # --- 2. RETRIEVE PASSWORD FROM SECRETS MANAGER ---
 echo "Retrieve database password..."
-SECRET_ARN=$(terragrunt output -json -terragrunt-working-dir $TESSERACT_DIR/terragrunt.hcl rds_aurora_cluster_master_user_secret | jq --raw-output .[0].secret_arn)
+SECRET_ARN=$(terragrunt output -json -terragrunt-working-dir $TESSERACT_DIR rds_aurora_cluster_master_user_secret | jq --raw-output .[0].secret_arn)
 export DB_PASSWORD=$(aws secretsmanager get-secret-value --secret-id $SECRET_ARN --query SecretString --output text | jq --raw-output .password)
 
-export DYNAMO_TABLE=$(terragrunt output -raw -terragrunt-working-dir $MONITOR_DIR/terragrunt.hcl table_name)
+export DYNAMO_TABLE=$(terragrunt output -raw -terragrunt-working-dir $MONITOR_DIR table_name)
 
 export AWS_REGION="eu-central-1"
 export TESSERA_BASE_NAME="test-static-ct"
