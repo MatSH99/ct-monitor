@@ -1,0 +1,6 @@
+[submodule "tesseract"]
+	path = tesseract
+	url = https://github.com/MatSH99/tesseract.git
+[submodule "certificate-transparency-go"]
+	path = certificate-transparency-go
+	url = https://github.com/MatSH99/certificate-transparency-go.git
