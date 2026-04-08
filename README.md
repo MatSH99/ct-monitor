@@ -35,19 +35,6 @@ Before deployment, ensure your environment (EC2) has the following installed:
 * **Git**: To manage submodules.
 * **Go**: Required to compile.
 
-## Repository Structure
-
-ct-monitor/
-├── tesseract/           # Git Submodule: The core log server fork
-├── cmd/                 # Go Source Code: Indexer and Search API
-├── infrastructure/      
-│   ├── modules/         # Terraform code for DynamoDB
-│   └── live/            # Terragrunt environment configurations
-├── docker/              # Dockerfile (Multi-stage build for all components)
-├── scripts/             # Discovery and Preloader orchestration scripts
-├── Makefile             # CLI shortcuts for daily operations
-└── start.sh             # The "Master" script to bridge AWS data and Docker
-
 ## Setup & Deployment
 
 Follow these steps in order to ensure the Monitor correctly attaches to the Tesseract core outputs.
@@ -130,7 +117,9 @@ The system uses Docker depends_on logic. Launching a preloader will automaticall
 * **Tesseract Startup:** The server initializes using the shared roots and connects to the Aurora instance.
 * **Parallel Preloading:** run_preloaders.sh launches a dedicated preloader for every discovered log. It retrieves the current index from the log's STH or Checkpoint and starts feeding data to Tesseract.
 * **Asynchronous Indexing:** The indexer service watches the S3 bucket. As soon as Tesseract writes a new "Tile", the indexer parses the certificates and updates the DynamoDB table.
-* **Search:** Users can query the API to find all certificates associated with a specific domain or root CA.
+* **Search:** Users can query the API to find all certificates associated with a specific domain. To do so:
+  http://[EC2-public-IP]:8080/v1/search?q=example.com (or just example)
+  http://[EC2-public-IP]:8080/v1/certificate?q=[index]
 
 ## Maintenance
 * Check status: docker compose ps
