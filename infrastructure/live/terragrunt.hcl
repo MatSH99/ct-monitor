@@ -7,9 +7,9 @@ include "root" {
 }
 
 dependency "tesseract" {
-  config_path = "../../../tesseract/deployment/live/aws/test"
+  config_path = "../../tesseract/deployment/live/aws/test"
 }
 
 inputs = {
-  table_name = "CertIndex-${dependency.tesseract.outputs.prefix}"
+  table_name = "CertIndex-${dependency.tesseract.outputs.prefix_name}"
 }
