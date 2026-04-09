@@ -34,7 +34,6 @@ services:
       "--signer_private_key_secret_name=${TESSERACT_SIGNER_ECDSA_P256_PRIVATE_KEY_ID}",
       "--enable_publication_awaiter=false",
       "--rate_limit_dedup=-1",
-      "--batch_max_age=1s",
       "--v=1"
     ]
     volumes:
@@ -52,7 +51,7 @@ services:
     environment:
       - AWS_REGION=eu-west-1
       - TESSERA_BASE_NAME=${TESSERA_BASE_NAME}
-    command: ["--continuous=true", "--num_workers=${NUM_WORKERS:-4}", "--batch_size=${BATCH_SIZE:-1000}", "--parallel_submit=${PARALLEL_SUBMIT:-4}", "--parallel_fetch=${PARALLEL_FETCH:-2}"]
+    command: ["--continuous=true", "--num_workers=${NUM_WORKERS:-32}", "--batch_size=${BATCH_SIZE:-1000}", "--parallel_submit=${PARALLEL_SUBMIT:-16}", "--parallel_fetch=${PARALLEL_FETCH:-4}"]
     volumes:
       - shared_data:/shared
     depends_on:
