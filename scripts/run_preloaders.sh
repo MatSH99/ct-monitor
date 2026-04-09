@@ -8,7 +8,7 @@ TESSERA_BASE_NAME="test-static-ct"
 USER_ARGS="$@"
 
 get_flag_value() {
-    echo "$USER_ARGS" | grep -oP "(?<=--$1=)[^ ]+"
+    echo "$USER_ARGS" | sed -n "s/.* --$1=\([^ ]*\) .*/\1/p"
 }
 
 OVERRIDE_START=$(get_flag_value "start_index")
@@ -24,7 +24,7 @@ while read -r URL; do
     API_URL=$(echo "$CLEAN_URL" | sed 's/log\./mon\./' | sed 's/sun/sky/')
     LOG_NAME=$(echo $CLEAN_URL | sed 's/\//_/g')
 
-    if [ ! -z "$OVERRIDE_START" ]; then
+    if [ -n "$OVERRIDE_START" ]; then
       CURRENT_START=$OVERRIDE_START
     else
 
