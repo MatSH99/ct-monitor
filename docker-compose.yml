@@ -25,7 +25,7 @@ services:
       "--db_name=tesseract",
       "--db_host=${TESSERACT_DB_HOST}",
       "--db_port=3306",
-      "--db_password=${DB_PASSWORD}",
+      "--db_password=${TESSERACT_DB_PASSWORD}",
       "--antispam_db_name=antispam_db",
       "--signer_public_key_secret_name=${TESSERACT_SIGNER_ECDSA_P256_PUBLIC_KEY_ID}",
       "--signer_private_key_secret_name=${TESSERACT_SIGNER_ECDSA_P256_PRIVATE_KEY_ID}",
