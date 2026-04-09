@@ -35,8 +35,9 @@ while read -r URL; do
                 echo "$cert" | fold -w 64 >> "$ROOTS_FILE"
                 echo "-----END CERTIFICATE-----" >> "$ROOTS_FILE"
             fi
-        done
-        echo "  -> OK"
+            done
+            echo "  -> OK"
+        fi
     fi
 done < $LOGS_FILE
 
