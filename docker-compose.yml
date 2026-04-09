@@ -49,7 +49,10 @@ services:
       context: .
       dockerfile: docker/Dockerfile
     entrypoint: ["/usr/local/bin/run_preloaders.sh"]
-    command: ["--continuous=true", "--num_workers=32", "--batch_size=1000", "--parallel_submit=16", "--parallel_fetch=4"]
+    environment:
+      - AWS_REGION=eu-west-1
+      - TESSERA_BASE_NAME=${TESSERA_BASE_NAME}
+    command: ["--continuous=true", "--num_workers=${NUM_WORKERS:-32}", "--batch_size=${BATCH_SIZE:-1000}", "--parallel_submit=${PARALLEL_SUBMIT:-16}", "--parallel_fetch=${PARALLEL_FETCH:-4}"]
     volumes:
       - shared_data:/shared
     depends_on:
@@ -60,7 +63,10 @@ services:
       context: .
       dockerfile: docker/Dockerfile
     entrypoint: ["/usr/local/bin/run_preloaders.sh"]
-    command: ["--start_index=0", "--num_workers=32", "--batch_size=1000", "--parallel_submit=16", "--parallel_fetch=4", "--continuous=false"]
+    environment:
+      - AWS_REGION=eu-west-1
+      - TESSERA_BASE_NAME=${TESSERA_BASE_NAME}
+    command: ["--start_index=${START_INDEX:-0}", "--num_workers=${NUM_WORKERS:-32}", "--batch_size=${BATCH_SIZE:-1000}", "--parallel_submit=${PARALLEL_SUBMIT:-16}", "--parallel_fetch=${PARALLEL_FETCH:-4}", "--continuous=${CONTINUOUS:-false}"]
     volumes:
       - shared_data:/shared
     depends_on:
