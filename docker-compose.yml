@@ -34,7 +34,7 @@ services:
       "--signer_private_key_secret_name=${TESSERACT_SIGNER_ECDSA_P256_PRIVATE_KEY_ID}",
       "--enable_publication_awaiter=false",
       "--rate_limit_dedup=-1",
-      "--garbage_collection_interval=1m",
+      "--batch_max_age=1s",
       "--v=1"
     ]
     volumes:
