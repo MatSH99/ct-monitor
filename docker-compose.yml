@@ -16,8 +16,10 @@ services:
       context: .
       dockerfile: docker/Dockerfile
     entrypoint: ["/usr/local/bin/tesseract-bin"]
+    environment:
+      - AWS_REGION=eu-west-1
     command: [
-      "--http_endpoint=localhost:6962",
+      "--http_endpoint=0.0.0.0:6962",
       "--roots_pem_file=/shared/combined_roots.pem",
       "--path_prefix=test-static-ct",
       "--origin=test-static-ct",
@@ -69,6 +71,8 @@ services:
       context: .
       dockerfile: docker/Dockerfile
     entrypoint: ["/usr/local/bin/indexer"]
+    environment:
+      - AWS_REGION=eu-west-1
     command: ["--bucket=${TESSERACT_BUCKET_NAME}"]
     depends_on:
       - tesseract
@@ -79,6 +83,8 @@ services:
       context: .
       dockerfile: docker/Dockerfile
     entrypoint: ["/usr/local/bin/api"]
+    environment:
+      - AWS_REGION=eu-west-1
     command: ["--bucket=${TESSERACT_BUCKET_NAME}", "--log_origin=${TESSERA_BASE_NAME}"]
     ports:
       - "8080:8080"
