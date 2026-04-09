@@ -1,0 +1,6 @@
+**/.terragrunt-cache
+**/.terraform
+**/.git
+**/node_modules
+*.tfstate*
+*.log
