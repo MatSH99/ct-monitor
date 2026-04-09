@@ -26,10 +26,15 @@ while read -r URL; do
     fi
 
     if [[ "$JSON_ROOTS" == *"certificates"* ]]; then
-        echo "$JSON_ROOTS" | jq -r '.certificates[]' 2>/dev/null | while read -r cert; do
-            echo "-----BEGIN CERTIFICATE-----" >> "$ROOTS_FILE"
-            echo "$cert" | fold -w 64 >> "$ROOTS_FILE"
-            echo "-----END CERTIFICATE-----" >> "$ROOTS_FILE"
+        CERTS=$(echo "$JSON_ROOTS" | jq -r '.certificates[]?' 2>/dev/null)
+        if [ -n "$CERTS" ]; then
+            COUNT=0
+            for cert in $CERTS; do
+            if [[ ${#cert} -gt 50 ]]; then
+                echo "-----BEGIN CERTIFICATE-----" >> "$ROOTS_FILE"
+                echo "$cert" | fold -w 64 >> "$ROOTS_FILE"
+                echo "-----END CERTIFICATE-----" >> "$ROOTS_FILE"
+            fi
         done
         echo "  -> OK"
     fi
