@@ -30,7 +30,7 @@ while read -r URL; do
       STH=$(curl -s -L --max-time 5 "${CLEAN_URL}/ct/v1/get-sth")
       CURRENT_START=$(echo "$STH" | jq -r '.tree_size' 2>/dev/null)
 
-      if [[ -z "$CURRENT_SIZE" || "$CURRENT_SIZE" == "null" ]]; then
+      if [[ -z "$CURRENT_START" || "$CURRENT_START" == "null" ]]; then
           STH_FILE=$(curl -s -L --max-time 5 "${API_URL}/checkpoint")
           CURRENT_START=$(echo "$STH_FILE" | sed -n '2p' | tr -d '\r' | xargs)
       fi
