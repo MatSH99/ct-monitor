@@ -21,6 +21,7 @@ done
 echo "Booting Preloader..."
 while read -r URL; do
     CLEAN_URL="$(echo $URL | sed 's/\/$//')"
+    API_URL=$(echo "$CLEAN_URL" | sed 's/log\./mon\./' | sed 's/sun/sky/')
     LOG_NAME=$(echo $CLEAN_URL | sed 's/\//_/g')
 
     if [ ! -z "$OVERRIDE_START" ]; then
