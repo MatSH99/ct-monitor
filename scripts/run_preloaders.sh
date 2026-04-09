@@ -42,7 +42,7 @@ while read -r URL; do
 
     /usr/local/bin/preloader_bin \
       --source_log_uri="$API_URL" \
-      --target_log_uri="http://localhost:6962/${TESSERA_BASE_NAME}" \
+      --target_log_uri="http://tesseract:6962/${TESSERA_BASE_NAME}" \
       --start_index="$CURRENT_START" \
       $CLEAN_ARGS &
 done < $LOGS_FILE
