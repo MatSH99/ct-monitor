@@ -28,7 +28,7 @@ while read -r URL; do
       CURRENT_START=$OVERRIDE_START
     else
 
-      STH=$(curl -s -L --max-time 5 "${CLEAN_URL}/ct/v1/get-sth")
+      STH=$(curl -s -L --max-time 5 "${API_URL}/ct/v1/get-sth")
       CURRENT_START=$(echo "$STH" | jq -r '.tree_size' 2>/dev/null)
 
       if [[ -z "$CURRENT_START" || "$CURRENT_START" == "null" ]]; then
