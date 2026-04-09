@@ -4,8 +4,8 @@ services:
   # 1. SETUP
   setup:
     build:
-      context: ..
-      dockerfile: ct-monitor/docker/Dockerfile
+      context: .
+      dockerfile: docker/Dockerfile
     entrypoint: ["/usr/local/bin/setup.sh"]
     volumes:
       - shared_data:/shared
@@ -13,8 +13,8 @@ services:
   # 2. TESSERACT SERVER
   tesseract:
     build:
-      context: ..
-      dockerfile: ct-monitor/docker/Dockerfile
+      context: .
+      dockerfile: docker/Dockerfile
     entrypoint: ["/usr/local/bin/tesseract-bin"]
     command: [
       "--http_endpoint=localhost:6962",
@@ -43,8 +43,8 @@ services:
   # 3. PRELOADERS
   preloaders-live:
     build:
-      context: ..
-      dockerfile: ct-monitor/docker/Dockerfile
+      context: .
+      dockerfile: docker/Dockerfile
     entrypoint: ["/usr/local/bin/run_preloaders.sh"]
     command: ["--continuous=true", "--num_workers=32", "--batch_size=1000", "--parallel_submit=16", "--parallel_fetch=4"]
     volumes:
@@ -54,8 +54,8 @@ services:
 
   preloaders-history:
     build:
-      context: ..
-      dockerfile: ct-monitor/docker/Dockerfile
+      context: .
+      dockerfile: docker/Dockerfile
     entrypoint: ["/usr/local/bin/run_preloaders.sh"]
     command: ["--start_index=0", "--num_workers=32", "--batch_size=1000", "--parallel_submit=16", "--parallel_fetch=4", "--continuous=false"]
     volumes:
@@ -66,8 +66,8 @@ services:
   # 4. INDEXER
   indexer:
     build:
-      context: ..
-      dockerfile: ct-monitor/docker/Dockerfile
+      context: .
+      dockerfile: docker/Dockerfile
     entrypoint: ["/usr/local/bin/indexer"]
     command: ["--bucket=${TESSERACT_BUCKET_NAME}"]
     depends_on:
@@ -76,8 +76,8 @@ services:
   # 5. API
   api:
     build:
-      context: ..
-      dockerfile: ct-monitor/docker/Dockerfile
+      context: .
+      dockerfile: docker/Dockerfile
     entrypoint: ["/usr/local/bin/api"]
     command: ["--bucket=${TESSERACT_BUCKET_NAME}", "--log_origin=${TESSERA_BASE_NAME}"]
     ports:
